@@ -1,0 +1,497 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head xmlns:th="http://www.thymeleaf.org">
+<meta name="viewport"
+	content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"></meta>
+	<title>Project | Proteome Cloud</title>	
+	<link href="../static/css/responsive.css" th:href="@{css/responsive.css}" rel="stylesheet"></link>
+    <link rel="stylesheet" type="text/css" href="../static/css/font-awesome.min.css" th:href="@{css/font-awesome.min.css}"></link>
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen" ></link>
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+        <!-- Bootstrap.js -->
+   <script src="../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}" > </script>
+   <link rel="icon" href="../static/images/favicon.ico" type="image/ico" > </link>
+
+   <link rel="stylesheet" type="text/css" href="../static/css/dataTables.bootstrap.min.css" th:href="@{css/dataTables.bootstrap.min.css}"> </link>
+   <script type="text/javascript"  src="../static/js/jquery.dataTables.min.js" th:src="@{js/jquery.dataTables.min.js}"></script>
+   <script type="text/javascript"  src="../static/js/dataTables.bootstrap.min.js" th:src="@{js/dataTables.bootstrap.min.js}"></script>
+
+   <link rel="stylesheet" href="../static/css/kendo.common.min.css" th:href="@{css/kendo.common.min.css}"></link>
+   <link rel="stylesheet" href="../static/css/kendo.default.min.css" th:href="@{css/kendo.default.min.css}"></link>
+   <!-- <link rel="stylesheet" href="../static/css/kendo.default.mobile.min.css" th:href="@{css/kendo.default.mobile.min.css}"></link> -->
+   <script src="../static/js/kendo.all.min.js" th:src="@{js/kendo.all.min.js}"></script>
+   <link href="../static/css/desktop.css" th:href="@{css/desktop.css}" rel="stylesheet"></link>
+   
+   <link type="text/css" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/smoothness/jquery-ui.min.css" media="screen"
+        									th:href="@{http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/smoothness/jquery-ui.min.css}"></link>
+        
+   <link rel="stylesheet" href="../static/css/jquery.ui.plupload.css" th:href="@{css/jquery.ui.plupload.css}"></link>
+       
+   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js" th:src="@{http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js}"></script>
+   <script type="text/javascript"  src="../static/js/plupload.full.min.js" th:src="@{js/plupload.full.min.js}"></script>
+   <script type="text/javascript"  src="../static/js/jquery.ui.plupload.min.js" th:src="@{js/jquery.ui.plupload.min.js}"></script>
+
+</head>
+<body>
+	<div th:replace="fragments/header :: header"></div>
+
+	<div id="inner-container">
+		<!-- Page Content -->
+		<div id="page-content">
+			<!-- Navigation info -->
+
+			<div id="upload-widget-container">
+			    <div id="upload-widget"></div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-12 push">
+				Active Experiments
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="panel panel-default">
+					  <!-- Table -->
+					  <table class="table" id="experimentDetails">
+						    <tbody>
+							    <tr>
+							        <td>Project name</td>
+							        <td th:text="${experiment.project.projectName}"></td>
+							    </tr>
+							    <tr>
+							        <td>Sample name</td>
+							        <td th:text="${experiment.sampleName}"></td>
+							    </tr>
+							    <tr>
+							        <td>Created date</td>
+							        <td th:text="${experiment.createDate}"></td>
+							    </tr>
+							    <tr>
+							        <td>Sample description</td>
+							        <td th:text="${experiment.sampleDescription}"></td>
+							    </tr>
+							    <tr>
+							        <td>Experiment description</td>
+							        <td th:text="${experiment.description}"></td>
+							    </tr>
+						  </tbody>
+					  </table>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-6 push">
+				<a href="#" onclick="createUploadDialog('spectral');">Upload Spectral Files</a>
+				</div>
+			</div>
+			Spectral Files
+            <div id="spectralFileGrid"></div>
+            <div class="row">
+				<div class="col-md-6 push">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6 push">
+					<a href="#" onclick="createUploadDialog('DTA');">Upload DTA Files</a>
+				</div>
+			</div>
+			DTA File Details
+            <div id="dtaFileDetailsGrid"></div>
+		</div>
+		<!-- END Page Content -->
+		<!-- Footer -->
+		<div class="container-fluid" id="footer"
+			th:replace="fragments/footer :: footer"></div>
+		<!-- END Footer -->
+	</div>
+	<div id="windowParent">
+    </div>
+	<!-- END Inner Container -->
+
+	<script th:inline="javascript">
+	var uploader = null;
+	
+	function createUploadDialog(fileType){
+		var title = '';
+		if(fileType === 'spectral'){
+			title = 'Upload Spectral Files';
+		}else{
+			title = 'Upload DTA Files';
+		}
+		$( "#upload-widget-container" ).dialog({
+			modal: true,
+            width: 600,
+            title: title,
+            my: "top",
+            at: "top",
+            of: window
+            
+         });
+		
+		$( "#upload-widget-container" ).dialog( "open" );
+		if(uploader){
+			$("#upload-widget").plupload('destroy');
+		}
+		if(fileType === 'spectral'){
+			uploader = createSpectralFileUploader();
+		}else {
+			uploader = createDTAFileUploader();
+		}
+		
+	}
+	
+	function createDtaFilesGrid(){
+		
+		var dataSource = new kendo.data.DataSource({
+            transport: {
+                read:  {
+                    url: "/readDtaFileDetails?experiment_id="+ [[${experiment.experiment_id}]],
+                    dataType: "json",
+                    type: "get"
+                },
+                update: {
+                    url: "/updateDescriptionAndFileName",
+                    dataType: "json",
+                    type:"post"
+                }
+            },
+            batch: false,
+            pageSize:50,
+            serverPaging: false,
+            schema: {
+                model: {
+                    id: "file_id",
+                    fields: {
+                    	name: { type :"text", editable: true },
+                    	date: { type :"text", editable: false },
+                    	proteinIds: { type :"int", editable: false },
+                    	peptideIds: { type :"int", editable: false },
+                    	proteinFdrs: { type :"number" , editable: false},
+                    	peptiedFdrs: { type :"int", editable: false },
+                    	spectrumFdrs: { type :"int", editable: false },
+                    	fileParameters: { type :"text", editable: false },
+                    	description:{ type :"text", editable: true },
+                    	uploadedBy:{ type :"text", editable: false }
+                    }
+                }
+            }
+        });
+		
+		$("#dtaFileDetailsGrid").kendoGrid({
+            dataSource: dataSource,
+            pageable: true,
+            sortable: true,
+            height: 170,
+            columns: [
+                { field: "name", title: "DTA File Name", headerAttributes : {"class" : "db-custom-table-header"}},
+                { field: "date", title: "Date", headerAttributes : {"class" : "db-custom-table-header"}},
+                { field: "proteinIds", title: "Protein Ids", headerAttributes : {"class" : "db-custom-table-header"}},
+                { field: "peptideIds", title: "Peptide Ids", headerAttributes : {"class" : "db-custom-table-header"}},
+                { field: "proteinFdrs", title: "Protein FDR", headerAttributes : {"class" : "db-custom-table-header"}},
+                { field: "peptiedFdrs", title: "Peptide FDR", headerAttributes : {"class" : "db-custom-table-header"}},
+                { field: "spectrumFdrs", title: "Spectrun FDR", headerAttributes : {"class" : "db-custom-table-header"}},
+                { field: "fileParameters", title: "File Parameters", headerAttributes : {"class" : "db-custom-table-header"}},
+                { field: "description", title: "Description", headerAttributes : {"class" : "db-custom-table-header"}},
+                { field: "uploadedBy", title: "Uploaded By", headerAttributes : {"class" : "db-custom-table-header"}},
+                { title: "Download" ,template:'#=name#<a href="downloadDataFile?file_id=#:file_id#"><span class="glyphicon glyphicon-download-alt"></span></a>', headerAttributes : {"class" : "db-custom-table-header"} },
+                { title: "Delete" ,template:'<a href="javascript:deleteDTAFile(#=file_id#)"><i class="glyphicon glyphicon-trash"></i></a>', headerAttributes : {"class" : "db-custom-table-header"} },
+                { command: ["edit"], title: "&nbsp;", width: "100px" }
+                ],
+            editable: "inline"
+        });
+	}
+	
+	 function deleteDTAFile(file_id){
+      	$("#windowParent").append('<div id="modalWindow"> <p id="message"></p><button id="yes" class="k-button">Yes</button><button id="no" class="k-button">No</button></div>');
+      	var wnd = $("#modalWindow").kendoWindow({
+              title: "",
+              modal: true,
+              visible: false,
+              resizable: false,
+              width: 300
+          }).data("kendoWindow");
+      	 $("#message").html('Are you sure you want to Delete DTA File?');
+      	 wnd.title("Delete DTA File");
+           wnd.center().open();
+           $("#yes").click(function () {
+          		$.ajax({
+          			url:'deleteDataFile?file_id='+file_id,
+          			method: 'POST',
+          			success : function(response){
+          				$('#dtaFileDetailsGrid').data('kendoGrid').dataSource.read();
+							$('#dtaFileDetailsGrid').data('kendoGrid').refresh();
+          			}
+          		});
+               wnd.close();
+               wnd.destroy();
+           });
+        
+           $("#no").click(function () {
+               wnd.close();
+               wnd.destroy();
+           });
+		}
+		function createSpectralFilesGrid(){
+			
+			var dataSource = new kendo.data.DataSource({
+                transport: {
+                    read:  {
+                        url: "/readDataFileDetails?experiment_id="+ [[${experiment.experiment_id}]],
+                        dataType: "json",
+                        type: "get"
+                    },
+                },
+                batch: false,
+                pageSize:50,
+                serverPaging: false,
+                schema: {
+                    model: {
+                        id: "data_file_id",
+                        fields: {
+                        	fileName: { type :"text" },
+                        	filePath: { type :"text" },
+                        	fileSize: { type :"int" },
+                        }
+                    }
+                }
+            });
+			
+			$("#spectralFileGrid").kendoGrid({
+                dataSource: dataSource,
+                pageable: true,
+                sortable: true,
+                height: 180,
+                columns: [
+                    { field: "fileName", title: "Spectral File Name", headerAttributes : {"class" : "db-custom-table-header"}},
+                    { field: "fileSize", title: "File Size (KB)", headerAttributes : {"class" : "db-custom-table-header"}},
+                    { field: "uploadedBy", title: "Uploaded By", headerAttributes : {"class" : "db-custom-table-header"}},
+                    { title: "Download" ,template:'#=fileName#<a href="downloadDataFile?data_file_id=#:data_file_id#"><span class="glyphicon glyphicon-download-alt"></span></a>', headerAttributes : {"class" : "db-custom-table-header"} },
+                    { title: "Delete" ,template:'<a href="javascript:deleteSpectralFile(#=data_file_id#)"><i class="glyphicon glyphicon-trash"></i></a>', headerAttributes : {"class" : "db-custom-table-header"} }
+                    ],
+                editable: false
+            });
+		}
+		
+		 function deleteSpectralFile(data_file_id){
+         	$("#windowParent").append('<div id="modalWindow"> <p id="message"></p><button id="yes" class="k-button">Yes</button><button id="no" class="k-button">No</button></div>');
+         	var wnd = $("#modalWindow").kendoWindow({
+                 title: "",
+                 modal: true,
+                 visible: false,
+                 resizable: false,
+                 width: 300
+             }).data("kendoWindow");
+         	 $("#message").html('Are you sure you want to Delete Spectral File?');
+         	 wnd.title("Delete Spectral File");
+              wnd.center().open();
+              $("#yes").click(function () {
+             		$.ajax({
+             			url:'deleteDataFile?data_file_id='+data_file_id,
+             			method: 'POST',
+             			success : function(response){
+             				$('#spectralFileGrid').data('kendoGrid').dataSource.read();
+							$('#spectralFileGrid').data('kendoGrid').refresh();
+             			}
+             		});
+                  wnd.close();
+                  wnd.destroy();
+              });
+           
+              $("#no").click(function () {
+                  wnd.close();
+                  wnd.destroy();
+              });
+		}
+		
+		function createKendoPanelBar(id){
+            var initPanelBar = function () {
+                $("#"+id).kendoPanelBar();
+            };
+
+            initPanelBar();
+		}
+		function createSpectralFileUploader() {
+			var fileNamesArr = [];
+	    	var uploader = $("#upload-widget").plupload({
+	            // General settings
+	            runtimes : 'html5,flash,silverlight,html4',
+	            url : "/fileUpload/upload",
+	     
+	            // Maximum file size
+	            max_file_size : 0,
+	     
+	            chunk_size: '1mb',
+	     
+	            // Resize images on clientside if we can
+	            resize : {
+	                width : 200,
+	                height : 100,
+	                quality : 90,
+	                crop: true // crop to exact dimensions
+	            },
+	     
+	            // Rename files by clicking on their titles
+	            rename: true,
+	             
+	            // Sort files
+	            sortable: true,
+	     
+	            // Enable ability to drag'n'drop files onto the widget (currently only HTML5 supports that)
+	            dragdrop: true,
+	     
+	            // Views to activate
+	            views: {
+	                list: true,
+	                thumbs: true, // Show thumbs
+	                active: 'thumbs'
+	            },
+	     
+	            // Flash settings
+	            flash_swf_url : '@{js/Moxie.swf}',
+	         
+	            // Silverlight settings
+	            silverlight_xap_url : '@{js/Moxie.xap}',
+	            buttons:{browse:true,start:true,stop:false},
+	            init : {
+	            	BeforeUpload: function(up, file) {
+	            		up.settings.multipart_params = {
+	           	            filename: file.name,
+	           	         	foldername: [[${experiment.folderPath}]] +"/"+ "active"
+	           	        };
+	            	},
+	            	FileUploaded: function(up, file, info) {
+	                    // Called when file has finished uploading
+	                    //console.log('[FileUploaded] File:', file, "Info:", info);
+	                    if(info.status === 200){
+	                    	var fileName = file.name;
+	                    	var filePath = [[${experiment.folderPath}]] +"/"+ "active/" +   file.name ;
+	                        var fileSize = (file.size >1024) ? file.size/1024 : file.size;
+	                        var dataFile = {
+	                        	fileName: file.name,
+	                        	fileSize: fileSize,
+	                        	isDtaFile : false,
+	                        	filePath: filePath
+	                        }
+	                        $.ajax({
+	                        	url:'/addDataFiles?experiment_id=' + [[${experiment.experiment_id}]],
+	                        	method:"POST",
+	                        	data : dataFile,
+	                        	success : function(response){
+	                        		console.log('successfully updated experiment with DataFile Detail.');
+	                        		
+	                        		$('#spectralFileGrid').data('kendoGrid').dataSource.read();
+        							$('#spectralFileGrid').data('kendoGrid').refresh();
+        							
+	                        	}
+	                        });
+	                    }
+	                    
+	                }
+	            }
+	            
+	        });
+	    	return uploader;
+	    }
+		function createDTAFileUploader() {
+			var fileNamesArr = new Map();
+	    	var uploader = $("#upload-widget").plupload({
+	            // General settings
+	            runtimes : 'html5,flash,silverlight,html4',
+	            url : "/fileUpload/upload",
+	     
+	            // Maximum file size
+	            max_file_size : 0,
+	     
+	            chunk_size: '1mb',
+	     
+	            // Resize images on clientside if we can
+	            resize : {
+	                width : 200,
+	                height : 100,
+	                quality : 90,
+	                crop: true // crop to exact dimensions
+	            },
+	     
+	            filters : [
+	                       {title : "DTA Files", extensions : "txt",prevent_duplicates: true},
+	                       
+	                   ],
+	            // Rename files by clicking on their titles
+	            rename: true,
+	             
+	            // Sort files
+	            sortable: true,
+	     
+	            // Enable ability to drag'n'drop files onto the widget (currently only HTML5 supports that)
+	            dragdrop: true,
+	     
+	            // Views to activate
+	            views: {
+	                list: true,
+	                thumbs: true, // Show thumbs
+	                active: 'thumbs'
+	            },
+	     
+	            // Flash settings
+	            flash_swf_url : '@{js/Moxie.swf}',
+	         
+	            // Silverlight settings
+	            silverlight_xap_url : '@{js/Moxie.xap}',
+	            buttons:{browse:true,start:true,stop:false},
+	            init : {
+	            	BeforeUpload: function(up, file) {
+	            		var fileName = file.name;
+	            		fileName = fileName.substring(0, fileName.indexOf('.txt'));
+	            		var date = new Date();
+	            		var month = date.getMonth() + 1;
+	            		fileName = fileName + "_" + date.getFullYear() +"_"+ month +"_"+ date.getDate() +"_"+ date.getHours() +"_"+ date.getMinutes() +"_"+ date.getSeconds() + '.txt'
+	            		fileNamesArr.set(file.name,fileName);
+	            		up.settings.multipart_params = {
+	           	            filename: fileName,
+	           	         	foldername: [[${experiment.folderPath}]] +"/"+ "active"
+	           	        };
+	            	},
+	            	FileUploaded: function(up, file, info) {
+	                    // Called when file has finished uploading
+	                    //console.log('[FileUploaded] File:', file, "Info:", info);
+	                    if(info.status === 200){
+	                    	var fileNameFromMap = fileNamesArr.get(file.name);
+	                    	var fileName = fileNameFromMap ? fileNameFromMap : file.name;
+	                    	var filePath = [[${experiment.folderPath}]] +"/"+ "active/" +   fileName ;
+	                        var fileSize = (file.size >1024) ? file.size/1024 : file.size;
+	                        var dataFile = {
+	                        	fileName: file.name,
+	                        	fileSize: fileSize,
+	                        	dtaFile : true,
+	                        	filePath: filePath
+	                        }
+	                        $.ajax({
+	                        	url:'/addDataFiles?experiment_id=' + [[${experiment.experiment_id}]],
+	                        	method:"POST",
+	                        	data : dataFile,
+	                        	success : function(response){
+	                        		console.log('successfully updated experiment with DataFile Detail.');
+	                        		$('#dtaFileDetailsGrid').data('kendoGrid').dataSource.read();
+        							$('#dtaFileDetailsGrid').data('kendoGrid').refresh();
+	                        	}
+	                        });
+	                    }
+	                },
+	                FileRemoved: function(up, file, info) {
+	                	
+	                }
+	            }
+	        });
+	    	 return uploader;
+	    }
+		$(function(){
+			createSpectralFilesGrid();
+			createDtaFilesGrid();
+		}) ;  
+     </script>
+</body>
+</html>

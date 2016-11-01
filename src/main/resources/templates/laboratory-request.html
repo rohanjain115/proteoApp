@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"></meta>
+        <title>Laboratory Request | Proteome Cloud</title>
+       <link href="css/desktop.css" th:href="@{css/desktop.css}" rel="stylesheet"></link>
+        <link href="css/responsive.css" th:href="@{css/responsive.css}" rel="stylesheet"></link>
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" th:href="@{/webjars/font-awesome/4.6.3/css/font-awesome.min.css}"></link>
+        <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}" rel="stylesheet" media="screen" />
+        <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js" th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+        <script src="js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}"></script>
+           <link rel="icon" href="../static/images/favicon.ico" type="image/ico" > </link>
+    </head>
+    <body >
+
+        <div class="outer-login"> 
+            <div class="inner-login">
+                <!-- Login Container -->
+                <div id="login-logo">
+                    <a href="" class="logo-img">
+                        <img src="../static/images/logo.png" th:src="@{images/logo.png}"  alt="logo"></img>
+                    </a>
+                </div>
+                <div id="signup-container">        
+
+                    <!-- Login Buttons -->
+
+                    <!-- END Login Buttons -->
+
+                    <!-- Login Form -->
+                    <div id="f1_card" class="shadow">
+                        <div class="front face">
+                            <form id="login-form" action="#" th:action="@{/lab-register}" th:object="${labForm}" method="post" class="form-horizontal login-form">
+
+                                <h4 class="text-center">Request Laboratory Creation</h4>
+
+                                 <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-globe fa-fw"></i></span>
+                                            <input type="text" th:field="*{labUrl}"  name="Laboratory URL" placeholder="Laboratory URL" class="form-control"> </input>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-flask fa-fw"></i></span>
+                                            <input type="text" th:field="*{labName}" name="Laboratory Name" placeholder="Laboratory Name" class="form-control"> </input>
+
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+                                            <input type="text" th:field="*{requestorEmail}"  name="" placeholder="Email" class="form-control"> </input>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <h5 class="pull-left">Laboratory Head </h5>
+                               <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                                            <input type="text" th:field="*{labHeadFirstName}" name="First Name" placeholder="First Name" class="form-control"> </input>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-users fa-fw"></i></span>
+                                            <input type="text" th:field="*{labHeadLastName}" name="Last Name" placeholder="Last Name" class="form-control"> </input>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+                                            <input type="text" th:field="*{labHeadEmail}"  name="" placeholder="Email" class="form-control"> </input>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix">
+                                    <button type="submit" class="singnin-btn send ">Send</button>
+                                    <button type="cancel" class="singnin-btn cancel ">Cancel</button>
+                                </div>
+                               
+
+                            </form>
+                        </div>
+
+                    </div>
+                    <!-- END Login Form -->
+                </div>
+
+                <!-- END Login Container -->
+            </div>
+        </div>
+        <!-- Include Jquery library from Google's CDN but if something goes wrong get Jquery from local file (Remove 'http:' if you have SSL) -->
+
+        <!-- Javascript code only for this page -->
+
+    </body>
+</html>

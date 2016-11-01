@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"></meta>
+        <title>Login | Proteome Cloud</title>
+        <link href="../static/css/desktop.css" th:href="@{css/desktop.css}" rel="stylesheet"></link>
+        <link href="../static/css/responsive.css" th:href="@{css/responsive.css}" rel="stylesheet"></link>
+        <link rel="stylesheet" type="text/css" href="../static/css/font-awesome.min.css" th:href="@{/webjars/font-awesome/4.6.3/css/font-awesome.min.css}"></link>
+        <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}" rel="stylesheet" media="screen" />
+        <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js" th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+        <script src="../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}"></script>
+        <link rel="icon" href="images/favicon.ico" type="image/ico" > </link>
+    </head>
+    <body >
+
+        <div class="outer-login"> 
+            <div class="inner-login">
+                <!-- Login Container -->
+                <div id="login-logo">
+                    <a href="" class="logo-img">
+                        <img src="../static/images/logo.png" th:src="@{images/logo.png}"  alt="logo"></img>
+                    </a>
+                </div>
+                <div id="login-container">        
+
+                    <!-- Login Buttons -->
+
+                    <!-- END Login Buttons -->
+
+                    <!-- Login Form -->
+                    <div id="f1_card" class="shadow">
+                        <div class="front face">
+                            <form id="login-form" action="login" method="post" class="form-horizontal login-form">
+								<div class="alert alert-danger" th:if="${danger != null}"><span th:text="${danger}"></span></div>
+								<div class="alert alert-info" th:if="${info != null}"><span th:text="${info}"></span></div>
+								<div class="alert alert-success" th:if="${success != null}"><span th:text="${success}"></span></div>
+                                <h4 class="text-center">LOG IN</h4>
+		
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+                                            <input type="text" id="login-email" name="username" placeholder="Email.." class="form-control"> </input>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+                                            <input type="password" id="login-password" name="password" placeholder="Password.." class="form-control"></input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clearfix">
+                                    <div class="btn-group btn-group-sm pull-right">
+                                        <a  class="forgot">Forgot Password ?</a>
+                                    </div>
+                                    <label id="topt-fixed-header-top" class=" pull-left remember" data-toggle="tooltip" title="Remember me">
+                                    <input type="checkbox" class="rmember-check"></input> Remember me </label>
+                                </div>
+                                <div class="clearfix">
+
+                                     <button type="submit" class="singnin-btn">Sign In</button>
+                                </div>
+                                <div class="clearfix">
+                                    <div class="signup">
+                                        <span>Don't have an account ?</span>
+                                        <a class="" href="register"> sign up</a>
+                                    </div>
+                                    
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="back face center forgot-container">
+                            <h4 class="text-center">Forgot Password</h4>
+                            <form id="forgot-form" action="index.html" method="post" class="form-horizontal login-form">
+
+                                <div class="form-group">
+                                    <div class="col-xs-12">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
+                                            <input type="text" id="login-email" name="login-email" placeholder="Email.." class="form-control">
+											</input>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="clearfix">
+                                    <div class="btn-group btn-group-sm pull-right">
+                                        <a  id="back">Back to Login</a>
+                                    </div>
+
+                                </div>
+                                <div class="clearfix">
+
+                                    <a class="singnin-btn">Reset password</a>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                    <!-- END Login Form -->
+                </div>
+
+                <!-- END Login Container -->
+            </div>
+        </div>
+        <!-- Include Jquery library from Google's CDN but if something goes wrong get Jquery from local file (Remove 'http:' if you have SSL) -->
+    
+        <!-- Javascript code only for this page -->
+        <script>
+            $(document).ready(function () {
+                $(".forgot").click(function () {
+                    $("#f1_card").addClass("flip");
+                });
+                $("#back").click(function () {
+                    $("#f1_card").removeClass("flip");
+                    $("#f1_card").addClass("flip1");
+                });
+            });
+            $(function () {
+                var loginButtons = $('#login-buttons');
+                var loginForm = $('#login-form');
+
+                // Reveal login form
+                $('#login-btn-email').click(function () {
+                    loginButtons.slideUp(600);
+                    loginForm.slideDown(450);
+                });
+
+                // Hide login form
+//                $('.login-back').click(function () {
+//                    loginForm.slideUp(450);
+//                    loginButtons.slideDown(600);
+//                });
+            });
+        </script>
+    </body>
+</html>

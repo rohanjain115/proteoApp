@@ -1,0 +1,272 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <head xmlns:th="http://www.thymeleaf.org">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"></meta>
+        <title>Experiment | Proteome Cloud</title>
+        <link href="../static/css/desktop.css" th:href="@{css/desktop.css}" rel="stylesheet"></link>
+        <link href="../static/css/responsive.css" th:href="@{css/responsive.css}" rel="stylesheet"></link>
+        <link rel="stylesheet" type="text/css" href="../static/css/font-awesome.min.css" th:href="@{css/font-awesome.min.css}"></link>
+        <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+              th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+              rel="stylesheet" media="screen" ></link>
+        <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+        th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+        <!-- Bootstrap.js -->
+        <script src="../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}" ></script>
+        <link rel="icon" href="../static/images/favicon.ico" type="image/ico" > </link>
+
+
+        <!-- Bootstrap.js -->
+        <link rel="stylesheet" type="text/css" href="../static/css/dataTables.bootstrap.min.css" th:src="@{css/dataTables.bootstrap.min.css}"> </link>
+        <script type="text/javascript"  src="../static/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript"  src="../static/js/dataTables.bootstrap.min.js"></script>
+
+    </head>
+    <body>
+        <!-- Page Container -->
+        <div id="page-container">
+
+            <header class="navbar navbar-inverse">
+                <!-- Mobile Navigation, Shows up  on smaller screens -->
+                <ul class="navbar-nav-custom pull-right hidden-md hidden-lg">
+                    <li class="divider-vertical"></li>
+                    <li>
+                        <!-- It is set to open and close the main navigation on smaller screens. The class .navbar-main-collapse was added to aside#page-sidebar -->
+                        <a href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-main-collapse">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                    </li>
+                </ul>
+                <!-- END Mobile Navigation -->
+
+                <!-- Logo -->
+                <a href="index.html" class="navbar-brand header-logo-img"><img src="../static/images/logo.png" th:src="@{images/logo.png}" alt="logo" class="img-responsive"></img></a>
+                <!-- Header Widgets -->
+                <!-- You can create the widgets you want by replicating the following. Each one exists in a <li> element -->
+                <ul id="widgets" class="navbar-nav-custom pull-right">
+                    <!-- Just a divider -->
+                    <li class="divider-vertical"></li>
+                    <!-- User Menu -->
+                    <li class="dropdown pull-right dropdown-user">
+                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user fa-2x"></i> <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <!-- Just a button demostrating how loading of widgets could happen, check main.js- - uiDemo() -->
+                            <li>
+                                <a href="javascript:void(0)" class="loading-on"><i class="fa fa-refresh"></i> Refresh</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <!-- Modal div is at the bottom of the page before including javascript code #modal-user-settings -->
+                                <a href="" role="button" data-toggle="modal"><i class="fa fa-user"></i> User Profile</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)"><i class="fa fa-wrench"></i> App Settings</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="logout"><i class="fa fa-lock"></i> Log out</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- END User Menu -->
+                </ul>
+                <!-- END Header Widgets -->
+            </header>            
+            <!-- END Header -->
+            <!-- Inner Container -->
+            <div class="sub_header clearfix">
+                <div class="col-md-12">
+                    <nav class=" navbar-default menu-default">
+                        <div class="container-fluid menu-container">
+                            <!-- Brand and toggle get grouped for better mobile display -->
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                            </div>
+                            <!-- Collect the nav links, forms, and other content for toggling -->
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                <ul class="nav navbar-nav">
+                                    <li class="">
+                                        <a title="Home" href="home.html">Home</a>
+                                    </li>
+                                    <li class="">
+                                        <a title="Database" href="database">Database</a>
+                                    </li>
+                                    <li class="">
+                                        <a title="Project" href="project.html">Project</a>
+                                    </li>                                          
+                                    <li class="">
+                                        <a title="Edit Profile" href="editprofile.html">Edit Profile</a>
+                                    </li>                                            
+                                </ul>
+                            </div><!-- /.navbar-collapse -->
+                        </div><!-- /.container-fluid -->
+                    </nav>
+                </div>
+            </div>
+            <!-- main header html contecnt end -->
+            <!-- Inner Container -->
+            <div id="inner-container">
+                <!-- Page Content -->
+                <div id="page-content">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <ol class="breadcrumb">
+                                <li><a href="#">Home</a></li>
+                                <li class="active">Project</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 push">
+                            <div id="main" class="project-page">  
+                            <h3>Experiment</h3>
+                              <div class="panel panel-default">
+                                								<!-- Table -->  								
+ 							 	<table class="table exp-table">
+    <tbody><tr>
+        <td>Project name</td>
+        <td>IainCheesemanTest</td>
+    </tr>
+    <tr>
+        <td>Sample name</td>
+        <td>LAB-1</td>
+    </tr>
+    <tr>
+        <td>Created date</td>
+        <td>2012-09-17 17:14:26.0</td>
+    </tr>
+    <tr>
+        <td>Spectra Path</td>
+        <td>/data/2/rpark/ip2_data//ip2test/IainCheesemanTest/LAB_1_2012_09_17_17_11684/spectra/</td>
+    </tr>
+    <tr>
+        <td>Sample description</td>
+        <td>NA</td>
+    </tr>
+    <tr>
+        <td>Experiment description</td>
+        <td>NA</td>
+    </tr>
+  </tbody></table>
+								</div>
+								
+								<div class="upload-spectral">
+								<a  data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+<span aria-hidden="true" class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Upload spectral files
+</a>
+				<div class="collapse" id="collapseExample">
+				  <div class="well">
+				   <p> (please do not include special characters (e.g., +, %, #, space) in the file name </p>
+				   <div role="alert" class="alert alert-info">
+                   <div class="checkbox">
+                       <label><input type="checkbox"><b>Convert raw to ms1/ms2 files.</b></label>
+                   </div>
+                   Note : when you use auto raw converter, please make sure ms1 and ms2 file size is not zero before searching. If you see any problem, please immediately contact us.
+                   <br>Note.&nbsp;Alternative standalone raw file conversion tools are available, too.
+              </div>
+              	
+              	
+				  </div>
+</div>
+								</div>
+								
+								<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingOne">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+         <span aria-hidden="true" class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;Click to show/hide spectral files
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body">
+        <table class="table table-hover table-bordered">
+                                    <h4>Archive Experiments</h4>
+                                    <thead>
+                                        <tr>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Username</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Username</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Mark</td>
+                                            <td>Otto</td>
+                                            <td>@mdo</td>
+                                            <td>Mark</td>
+                                            <td>Otto</td>
+                                            <td>@mdo</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mark</td>
+                                            <td>Otto</td>
+                                            <td>@mdo</td>
+                                            <td>Mark</td>
+                                            <td>Otto</td>
+                                            <td>@mdo</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+        <div>
+                                	<button class="btn btn-danger"  type="button"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+                                	<button title="" class="btn btn-primary" type="button" ><span class="glyphicon glyphicon-share-alt"></span> Move all selected raw files </button>
+                                </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+								<div>
+								<table class="table table-hover table-bordered">
+                            
+                                    <thead>
+                                        <tr>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Username</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Username</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Mark</td>
+                                            <td>Otto</td>
+                                            <td>@mdo</td>
+                                            <td>Mark</td>
+                                            <td>Otto</td>
+                                            <td>@mdo</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mark</td>
+                                            <td>Otto</td>
+                                            <td>@mdo</td>
+                                            <td>Mark</td>
+                                            <td>Otto</td>
+                                            <td>@mdo</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>	
+								</div>
+                                
+
+                            </div>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+        </div>
+    </body>
+</html>   

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<!-- main header html contecnt start -->
+<html class="no-js">
+    <head xmlns:th="http://www.thymeleaf.org">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"></meta>
+        <title>Edit Profile | Proteome Cloud</title>
+        <link href="css/desktop.css" th:href="@{css/desktop.css}" rel="stylesheet"></link>
+        <link href="css/responsive.css" th:href="@{css/responsive.css}" rel="stylesheet"></link>
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" th:href="@{css/font-awesome.min.css}"></link>
+        <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+              th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+              rel="stylesheet" media="screen" ></link>
+        <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+        th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+        <!-- Bootstrap.js -->
+        <script src="../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}" ></script>
+           <link rel="icon" href="../static/images/favicon.ico" type="image/ico" > </link>
+
+
+        <!-- Bootstrap.js -->	
+        <link rel="stylesheet" type="text/css" href="css/dataTables.bootstrap.min.css"> </link>
+        <script type="text/javascript"  src="js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript"  src="js/dataTables.bootstrap.min.js"></script>
+
+    </head>
+    <body>
+        <!-- Page Container -->
+        <div id="page-container">
+
+            <div th:replace="fragments/header :: header"> </div>
+            <!-- main header html contecnt end -->
+            <!-- Inner Container -->
+            <div id="inner-container">
+                <!-- Page Content -->
+                <div id="page-content">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <ol class="breadcrumb">
+                                <li><a href="#">Home</a></li>
+                                <li class="active">Edit Profile</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 push">
+                            <div id="main">           
+                                <div class="panel panel-primary edit-profile">
+                                    <div class="panel-heading"><h5 class="panel-title">Share Project</h5></div>
+                                    <form action="shareProject" method="post" class="form-horizontal login-form">
+                                    
+                                    <div class="panel-body">
+                                        <div class="">                     
+                                            <div class="row form-seprate">                                                                      
+                                                <div class="col-md-12">
+                                                   
+                                                    <div class="form-group ">
+                                                        <label>Username (To Share) *:</label>
+                                                        <input type="hidden" name="project_id" th:value="${project.project_id}" ></input> 
+                                                        <input type="text" class="form-control" name="username" placeholder="Username" required="required" ></input> 
+                                                    </div>
+                                                </div>                                               
+                                            </div>
+                                            <div style="display: none" class="row form-seprate">                                                                      
+                                                <div class="col-md-12">
+                                                    <!-- ngRepeat: info in recipeData.localeSpecificData| filter:{locale:localeVal} -->
+                                                  <div class="form-group">
+									              <label class="control-label" for="desc">Access Rights:</label>
+									              <br/>
+									              <input type="radio" disabled="disabled" checked="" value="false" name="fullAccess"></input> Read only
+									              <input type="radio" disabled="disabled" value="true" name="fullAccess"></input> Full Access
+           										 </div>
+                                                </div>                                               
+                                            </div>
+                                          
+                                        </div>
+                                        <div class="edit-btn">
+                                     
+                                                <button type="submit" class="btn btn-success">Submit</button>
+                                                <a href="project" type="button" class="btn btn-default">cancel</a>
+                                                
+                                            
+                                        </div>
+                                        </div>
+                                      </form>
+                                    </div>
+					<div class="share-table">
+						 <table class="table table-hover table-bordered">
+                                    <h4>Shared With</h4>
+                                    <thead>
+                                        <tr>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Username</th>
+                                            <th>Lab</th>
+                                           <th>Remove</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="user : ${sharedUsers}" >
+                                            <td th:text="${user.firstName}">Mark</td>
+                                            <td th:text="${user.lastName}">Otto</td>
+                                            <td th:text="${user.username}">@mdo</td>
+                                            <td th:text="${user.lab.labName}">@mdo</td>
+                                            <td >  <a th:href="@{revokeProject(project_id=${project.project_id},username=${user.username})}">delete</a></td>
+                                            <!-- ?project_id=${project.project_id}&username=${user.username}  -->
+                                        </tr>
+                                    </tbody>
+                                </table>
+					</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>   
+                <div class="container-fluid" id="footer" th:replace="fragments/footer :: footer">
+                <span class="col-sm-6 text-left">
+                        Version: 4.0
+
+                        | Logged in as: Proteome Cloud
+
+                    </span>
+                    <span class="col-sm-6 text-right">
+                        <span style="color: #fff">4.0.0</span>
+                        &copy; 2016 Proteome Cloud
+                    </span>
+                </div>
+            </div> 
+       
+    </body>
+</html>

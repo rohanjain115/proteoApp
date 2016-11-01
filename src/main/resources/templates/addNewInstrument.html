@@ -1,0 +1,195 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <head xmlns:th="http://www.thymeleaf.org">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"></meta>
+        <title>Add New Database | Proteome Cloud</title>
+        <link href="../static/css/desktop.css" th:href="@{css/desktop.css}" rel="stylesheet"></link>
+        <link href="../static/css/responsive.css" th:href="@{css/responsive.css}" rel="stylesheet"></link>
+        <link rel="stylesheet" type="text/css" href="../static/css/font-awesome.min.css" th:href="@{css/font-awesome.min.css}"></link>
+        <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+              th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+              rel="stylesheet" media="screen" ></link>
+        <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+        th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+        <!-- Bootstrap.js -->
+        <script src="../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}" ></script>
+           <link rel="icon" href="../static/images/favicon.ico" type="image/ico" > </link>
+
+
+        <!-- Bootstrap.js -->
+        <link rel="stylesheet" type="text/css" href="../static/css/dataTables.bootstrap.min.css" th:href="@{css/dataTables.bootstrap.min.css}"> </link>
+        <script type="text/javascript"  src="../static/js/jquery.dataTables.min.js" th:src="@{js/jquery.dataTables.min.js}"></script>
+        <script type="text/javascript"  src="../static/js/dataTables.bootstrap.min.js" th:src="@{js/dataTables.bootstrap.min.js}"></script>
+
+        <link rel="stylesheet" href="../static/css/kendo.common.min.css" th:href="@{css/kendo.common.min.css}"></link>
+        <link rel="stylesheet" href="../static/css/kendo.default.min.css" th:href="@{css/kendo.default.min.css}"></link>
+        <!-- <link rel="stylesheet" href="../static/css/kendo.default.mobile.min.css" th:href="@{css/kendo.default.mobile.min.css}"></link> -->
+        <script src="../static/js/kendo.all.min.js" th:src="@{js/kendo.all.min.js}"></script>
+        
+        <link type="text/css" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/smoothness/jquery-ui.min.css" media="screen"
+        									th:href="@{http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/smoothness/jquery-ui.min.css}"></link>
+        
+       <link rel="stylesheet" href="../static/css/jquery.ui.plupload.css" th:href="@{css/jquery.ui.plupload.css}"></link>
+       
+       <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js" th:src="@{http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js}"></script>
+       <script type="text/javascript"  src="../static/js/plupload.full.min.js" th:src="@{js/plupload.full.min.js}"></script>
+       <script type="text/javascript"  src="../static/js/jquery.ui.plupload.min.js" th:src="@{js/jquery.ui.plupload.min.js}"></script>
+      
+    </head>
+    <body>
+        <!-- Page Container -->
+        <div id="page-container">
+            <div th:replace="fragments/header :: header">
+                <header class="navbar navbar-inverse">
+                    <!-- Mobile Navigation, Shows up  on smaller screens -->
+                    <ul class="navbar-nav-custom pull-right hidden-md hidden-lg">
+                        <li class="divider-vertical"></li>
+                        <li>
+                            <!-- It is set to open and close the main navigation on smaller screens. The class .navbar-main-collapse was added to aside#page-sidebar -->
+                            <a href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-main-collapse">
+                                <i class="fa fa-bars"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- END Mobile Navigation -->
+
+                    <!-- Logo -->
+                    <a href="index.html" class="navbar-brand header-logo-img"><img src="../static/images/logo.png" th:src="@{images/logo.png}" alt="logo" class="img-responsive"></img></a>
+                    <!-- Header Widgets -->
+                    <!-- You can create the widgets you want by replicating the following. Each one exists in a <li> element -->
+                    <ul id="widgets" class="navbar-nav-custom pull-right">
+                        <!-- Just a divider -->
+                        <li class="divider-vertical"></li>
+                        <!-- User Menu -->
+                        <li class="dropdown pull-right dropdown-user">
+                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user fa-2x"></i> <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <!-- Just a button demostrating how loading of widgets could happen, check main.js- - uiDemo() -->
+                                <li>
+                                    <a href="javascript:void(0)" class="loading-on"><i class="fa fa-refresh"></i> Refresh</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <!-- Modal div is at the bottom of the page before including javascript code #modal-user-settings -->
+                                    <a href="" role="button" data-toggle="modal"><i class="fa fa-user"></i> User Profile</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><i class="fa fa-wrench"></i> App Settings</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="logout"><i class="fa fa-lock"></i> Log out</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- END User Menu -->
+                    </ul>
+                    <!-- END Header Widgets -->
+                </header>            
+                <!-- END Header -->
+                <!-- Inner Container -->
+                <div class="sub_header clearfix">
+                    <div class="col-md-12">
+                        <nav class=" navbar-default menu-default">
+                            <div class="container-fluid menu-container">
+                                <!-- Brand and toggle get grouped for better mobile display -->
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                </div>
+                                <!-- Collect the nav links, forms, and other content for toggling -->
+                                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                    <ul class="nav navbar-nav">
+                                        <li class="">
+                                            <a title="Home" href="home.html">Home</a>
+                                        </li>
+                                        <li class="">
+                                            <a title="Database" href="database">Database</a>
+                                        </li>
+                                        <li class="">
+                                            <a title="Project" href="project.html">Project</a>
+                                        </li>                                          
+                                        <li class="">
+                                            <a title="Edit Profile" href="editprofile.html">Edit Profile</a>
+                                        </li>                                            
+                                    </ul>
+                                </div><!-- /.navbar-collapse -->
+                            </div><!-- /.container-fluid -->
+                        </nav>
+                    </div>
+                </div>
+
+            </div>
+            <!-- main header html contecnt end -->
+            <!-- Inner Container -->
+            <div id="inner-container">
+                <!-- Page Content -->
+                <div id="page-content">
+                    <!-- Navigation info -->
+
+                    <div class="row">
+                        <div class="col-xs-7 col-sm-7 col-md-7">
+						        
+						<form namespace="/" id="newInstrument" name="instForm" onsubmit="return validateForm_newInstrument();" action="/addNewInstrument" method="post" class="form-horizontal">
+						<br></br>
+						        <div class="form-group">
+						            <label class="col-sm-3 text-left text-nowrap control-label">
+						                New instrument name
+						            </label>
+						            <div class="col-sm-5">
+						                <input type="text" id="instrumentName" name="instrumentName" class="form-control" value="" style="background-color: rgb(255, 255, 221);"></input>
+						            </div>
+						        </div>
+						
+						        <div class="form-group">
+						            &nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="&nbsp;&nbsp;Submit" class="btn btn-primary"></input>
+						            &nbsp;<input type="button" value="Cancel" onclick="history.back()" class="btn btn-default"></input>
+						        </div>
+						
+						
+						</form>
+						
+						
+						
+						<script type="text/javascript">
+						    function validateForm_newInstrument() {
+						        form = document.getElementById("newInstrument");
+						        clearErrorMessages(form);
+						        clearErrorLabels(form);
+						
+						        var errors = false;
+						
+						        return !errors;
+						    }
+						</script>
+						
+						</div>
+                    </div>
+                    
+                </div>
+                <!-- END Page Content -->
+                <!-- Footer -->
+                <div class="container-fluid" id="footer"  th:replace="fragments/footer :: footer">
+                   <span class="col-sm-6 text-left">
+                        Version: 4.0
+
+                        | Logged in as: Proteome Cloud
+
+                    </span>
+                    <span class="col-sm-6 text-right">
+                        <span style="color: #fff">4.0.0</span>
+                        &copy; 2016 Proteome Cloud
+                    </span>
+                </div>            
+                <!-- END Footer -->
+            </div>
+            <!-- END Inner Container -->
+        </div>
+        <!-- END Page Container -->
+        <!-- Javascript code only for this page -->
+
+    </body>
+</html>

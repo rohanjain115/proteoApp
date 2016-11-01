@@ -1,0 +1,240 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head xmlns:th="http://www.thymeleaf.org">
+<meta name="viewport"
+	content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"></meta>
+	<title>Project | Proteome Cloud</title>	
+	<link href="../static/css/responsive.css" th:href="@{css/responsive.css}" rel="stylesheet"></link>
+    <link rel="stylesheet" type="text/css" href="../static/css/font-awesome.min.css" th:href="@{css/font-awesome.min.css}"></link>
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen" ></link>
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+        <!-- Bootstrap.js -->
+   <script src="../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}" > </script>
+   <link rel="icon" href="../static/images/favicon.ico" type="image/ico" > </link>
+
+   <link rel="stylesheet" type="text/css" href="../static/css/dataTables.bootstrap.min.css" th:href="@{css/dataTables.bootstrap.min.css}"> </link>
+   <script type="text/javascript"  src="../static/js/jquery.dataTables.min.js" th:src="@{js/jquery.dataTables.min.js}"></script>
+   <script type="text/javascript"  src="../static/js/dataTables.bootstrap.min.js" th:src="@{js/dataTables.bootstrap.min.js}"></script>
+
+   <link rel="stylesheet" href="../static/css/kendo.common.min.css" th:href="@{css/kendo.common.min.css}"></link>
+   <link rel="stylesheet" href="../static/css/kendo.default.min.css" th:href="@{css/kendo.default.min.css}"></link>
+   <!-- <link rel="stylesheet" href="../static/css/kendo.default.mobile.min.css" th:href="@{css/kendo.default.mobile.min.css}"></link> -->
+   <script src="../static/js/kendo.all.min.js" th:src="@{js/kendo.all.min.js}"></script>
+   <link href="../static/css/desktop.css" th:href="@{css/desktop.css}" rel="stylesheet"></link>
+
+</head>
+<body>
+	<div th:replace="fragments/header :: header"></div>
+
+	<div id="inner-container">
+		<!-- Page Content -->
+		<div id="page-content">
+			<!-- Navigation info -->
+
+			<div class="row">
+				<div class="col-md-12 push">
+				Active Experiments
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div id="button" style="float: right">
+						<a th:href="@{|/viewAddNewExperiment?project_id=${project_id}|}"> <span
+							class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add
+							new Experiment
+						</a>
+					</div>
+				</div>
+			</div>
+			<!-- END Navigation info -->
+			<!-- Datatables -->
+			<div class="row">
+				<div class="col-md-12 push">
+					<div id="grid"></div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 push">
+				Archive Experiments
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 push">
+					<div id="gridArchive"></div>
+				</div>
+			</div>
+			<!-- END Datatables in the grid -->
+		</div>
+		<!-- END Page Content -->
+		<!-- Footer -->
+		<div class="container-fluid" id="footer"
+			th:replace="fragments/footer :: footer"></div>
+		<!-- END Footer -->
+	</div>
+	<div id="windowParent">
+	</div>
+	<!-- END Inner Container -->
+
+	<script th:inline="javascript">
+            /*<![CDATA[*/
+                function updateArchiveStatus(experimentId, isArchive){
+                	$("#windowParent").append('<div id="modalWindow"> <p id="message"></p><button id="yes" class="k-button">Yes</button><button id="no" class="k-button">No</button></div>');
+                	var wnd = $("#modalWindow").kendoWindow({
+                        title: "",
+                        modal: true,
+                        visible: false,
+                        resizable: false,
+                        width: 300
+                    }).data("kendoWindow");
+            		var msg = 'Are you sure you want to mark Experiment as Active?';
+            		var title = 'Mark Experiment Active';
+            		if(isArchive){
+            			msg = 'Are you sure you want to Archive Experiment?';
+            			title = 'Mark Experiment Archive';
+            		}
+                	$("#message").html(msg);
+                	wnd.title(title);
+                    wnd.center().open();
+                    $("#yes").click(function () {
+                   		$.ajax({
+                   			url:'/updateArchiveStatus?experiment_id='+experimentId +'&isArchive='+ isArchive,
+                   			method: 'POST',
+                   			success : function(response){
+                   				$('#grid').data('kendoGrid').dataSource.read();
+       							$('#grid').data('kendoGrid').refresh();
+       							
+       							$('#gridArchive').data('kendoGrid').dataSource.read();
+       							$('#gridArchive').data('kendoGrid').refresh();
+                   			}
+                   		});
+                        wnd.close();
+                        wnd.destroy();
+                    });
+                 
+                    $("#no").click(function () {
+                        wnd.close();
+                        wnd.destroy();
+                    });
+				}
+            
+                function deleteExperiment(experimentId){
+                	$("#windowParent").append('<div id="modalWindow"> <p id="message"></p><button id="yes" class="k-button">Yes</button><button id="no" class="k-button">No</button></div>');
+                	var wnd = $("#modalWindow").kendoWindow({
+                        title: "",
+                        modal: true,
+                        visible: false,
+                        resizable: false,
+                        width: 300
+                    }).data("kendoWindow");
+                	 $("#message").html('Are you sure you want to Delete Experiment?');
+                	 wnd.title("Delete Experiment");
+                     wnd.center().open();
+                     $("#yes").click(function () {
+                    		$.ajax({
+                    			url:'/experiment/delete?experiment_id='+experimentId,
+                    			method: 'POST',
+                    			success : function(response){
+                    				$('#grid').data('kendoGrid').dataSource.read();
+        							$('#grid').data('kendoGrid').refresh();
+        							
+        							$('#gridArchive').data('kendoGrid').dataSource.read();
+        							$('#gridArchive').data('kendoGrid').refresh();
+                    			}
+                    		});
+                         wnd.close();
+                         wnd.destroy();
+                     });
+                  
+                     $("#no").click(function () {
+                         wnd.close();
+                         wnd.destroy();
+                     });
+				}
+                $(document).ready(function () {
+                	
+                	function getDatasource(readURL){
+                		var transportForGrid = {
+                                read:  {
+                                    url: readURL,
+                                    dataType: "json",
+                                    type: "post"
+                                }
+                            };
+                		var dataSource = new kendo.data.DataSource({
+                            transport: transportForGrid,
+                            batch: false,
+                            serverPaging: false,
+                            pageSize: 50,
+                            schema: {
+                                model: {
+                                    id: "experiment_id",
+                                    fields: {
+                                    	sampleName: {editable: false},
+                                    	sampleDescription: { type :"text",editable:false },
+                                    	experimentDate: { type :"text",editable:false},
+                                    	createDate: { type :"text",editable: false },
+                                    	instrument: { from: 'instrument.instrumentName', type :"text",editable: false },
+                                    	description: { type :"text",editable: false },
+                                    }
+                                }
+                            }
+                        });
+                		return dataSource;
+                	}
+                	var readURL = "experiment" + '/read/'+[[${project_id}]];
+                	
+                	var readURLArchive = "experiment" + '/read/'+[[${project_id}]]+'?isArchive=true';
+                    
+                	var dataSource = getDatasource(readURL);
+					
+                    $("#grid").kendoGrid({
+                        dataSource: dataSource,
+                        pageable: true,
+                        sortable: true,
+                        height: 250,
+                        columns: [
+                            { field: "experiment_id", title: "Id", template:'<a href="/viewExperimentDetails?experiment_id=#:experiment_id#">#:experiment_id#</a>', headerAttributes : {"class" : "db-custom-table-header"}},
+                            { field: "sampleName", title: "Sample Name", headerAttributes : {"class" : "db-custom-table-header"}},
+                            { field: "sampleDescription", title: "Sample Description", headerAttributes : {"class" : "db-custom-table-header"}},
+                            { field: "instrument", title: "Instrument", headerAttributes : {"class" : "db-custom-table-header"}},
+                            { field: "experimentDate", title: "Date", headerAttributes : {"class" : "db-custom-table-header"}},
+                            {field:" createDate", title: "Create Date", headerAttributes : {"class" : "db-custom-table-header"}},
+                            { field: "description", title: "Description", headerAttributes : {"class" : "db-custom-table-header"}},
+                            { title: "Archive",template:'<a href="javascript:updateArchiveStatus(#=experiment_id#,true);"><span class="glyphicon glyphicon-eye-open"></span></a>', headerAttributes : {"class" : "db-custom-table-header"}},
+                            { title: "Edit" ,template:'<a href="/viewAddNewExperiment?experiment_id=#:experiment_id#"><i class="glyphicon glyphicon-edit"></i></a>', headerAttributes : {"class" : "db-custom-table-header"} },
+                            { title: "Delete" ,template:'<a href="javascript:deleteExperiment(#=experiment_id#)"><i class="glyphicon glyphicon-trash"></i></a>', headerAttributes : {"class" : "db-custom-table-header"} },
+                            { title: "Download" ,template:'<a href="downloadExperimentFiles?experiment_id=#:experiment_id#"><span class="glyphicon glyphicon-download-alt"></span></a>', headerAttributes : {"class" : "db-custom-table-header"} }
+                            ],
+                        editable: false
+                    });
+                    
+                    dataSource = getDatasource(readURLArchive);
+                    
+                    $("#gridArchive").kendoGrid({
+                        dataSource: dataSource,
+                        pageable: true,
+                        sortable: true,
+                        height: 250,
+                        columns: [
+                            { field: "experiment_id", title: "Id", headerAttributes : {"class" : "db-custom-table-header"}},
+                            { field: "sampleName", title: "Sample Name", headerAttributes : {"class" : "db-custom-table-header"}},
+                            { field: "sampleDescription", title: "Sample Description", headerAttributes : {"class" : "db-custom-table-header"}},
+                            { field: "instrument", title: "Instrument", headerAttributes : {"class" : "db-custom-table-header"}},
+                            { field: "experimentDate", title: "Date", headerAttributes : {"class" : "db-custom-table-header"}},
+                            {field:" createDate", title: "Create Date", headerAttributes : {"class" : "db-custom-table-header"}},
+                            { field: "description", title: "Description", headerAttributes : {"class" : "db-custom-table-header"}},
+                            { title: "Mark",template:'<a href="javascript:updateArchiveStatus(#=experiment_id#,false);"><span class="glyphicon glyphicon-eye-open"></span></a>', headerAttributes : {"class" : "db-custom-table-header"}},
+                            { title: "Edit" ,template:'<a href="/viewAddNewExperiment?experiment_id=#:experiment_id#"><i class="glyphicon glyphicon-edit"></i></a>', headerAttributes : {"class" : "db-custom-table-header"} },
+                            { title: "Delete" ,template:'<a href="javascript:deleteExperiment(#=experiment_id#)"><i class="glyphicon glyphicon-trash"></i></a>', headerAttributes : {"class" : "db-custom-table-header"} },
+                            { title: "Download" ,template:'<a href="downloadExperimentFiles?experiment_id=#:experiment_id#"><span class="glyphicon glyphicon-download-alt"></span></a>', headerAttributes : {"class" : "db-custom-table-header"} }
+                            ],
+                        editable: false
+                    });
+                });
+            
+                /*]]>*/
+            </script>
+</body>
+</html>

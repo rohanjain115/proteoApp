@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+  </head>
+  <body>
+  	<div th:fragment="header">
+  	
+			<header class="navbar navbar-inverse">
+                <!-- Mobile Navigation, Shows up  on smaller screens -->
+                <ul class="navbar-nav-custom pull-right hidden-md hidden-lg">
+                    <li class="divider-vertical"></li>
+                    <li>
+                        <!-- It is set to open and close the main navigation on smaller screens. The class .navbar-main-collapse was added to aside#page-sidebar -->
+                        <a href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-main-collapse">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                    </li>
+                </ul>
+                <!-- END Mobile Navigation -->
+
+                <!-- Logo -->
+                <a href="index.html" class="navbar-brand header-logo-img"><img src="../static/images/logo.png" th:src="@{images/logo.png}" alt="logo" class="img-responsive"></img></a>
+                <!-- Header Widgets -->
+                <!-- You can create the widgets you want by replicating the following. Each one exists in a <li> element -->
+                <ul id="widgets" class="navbar-nav-custom pull-right">
+                    <!-- Just a divider -->
+                    <li class="divider-vertical"></li>
+                    <!-- User Menu -->
+                    <li class="dropdown pull-right dropdown-user">
+                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user fa-2x"></i> <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <!-- <li class="divider"></li> -->
+                            <li>
+                                <a href="logout"><i class="fa fa-lock"></i> Log out</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- END User Menu -->
+                </ul>
+                <!-- END Header Widgets -->
+            </header>            
+            <!-- END Header -->
+            <!-- Inner Container -->
+                 <div class="sub_header clearfix">
+                        <div class="col-md-12">
+                            <nav class=" navbar-default menu-default">
+                                <div class="container-fluid menu-container">
+                                    <!-- Brand and toggle get grouped for better mobile display -->
+                                    <div class="navbar-header">
+                                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                            <span class="sr-only">Toggle navigation</span>
+                                            <span class="icon-bar"></span>
+                                            <span class="icon-bar"></span>
+                                            <span class="icon-bar"></span>
+                                        </button>
+                                    </div>
+                                    <!-- Collect the nav links, forms, and other content for toggling -->
+                                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                         <ul class="nav navbar-nav">
+                                            <li class="">
+                                                <a title="Home" href="home">Home</a>
+                                            </li>
+                                            <li class=""  sec:authorize="hasRole('ROLE_USER')">
+                                                <a title="Database" href="database">Database</a>
+                                            </li>
+                                            <li class="" sec:authorize="hasRole('ROLE_USER')">
+                                                <a title="Project" href="project">Project</a>
+                                            </li>                                          
+                                            <li class="">
+                                                <a title="Edit Profile" href="profile">Edit Profile</a>
+                                            </li>  
+                                            
+                                             <li class="" sec:authorize="hasRole('ROLE_ADMIN')">
+                                                <a title="Site Updates" href="message">Site Updates</a>
+                                            </li>  
+                                             <li class="" sec:authorize="hasRole('ROLE_ADMIN')">
+                                                <a title="Lab" href="lab">Lab</a>
+                                            </li>   
+                                            <li class="" sec:authorize="hasRole('ROLE_ADMIN')">
+                                                <a title="Users" href="user">Users</a>
+                                            </li>                                             
+                                        </ul>
+                                    </div><!-- /.navbar-collapse -->
+                                </div><!-- /.container-fluid -->
+                            </nav>
+                        </div>
+                    </div>
+                    
+                    </div>
+</body>
+</html>

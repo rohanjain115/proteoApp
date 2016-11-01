@@ -1,0 +1,330 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <head xmlns:th="http://www.thymeleaf.org">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"></meta>
+        <title>Add New Database | Proteome Cloud</title>
+        <link href="../static/css/desktop.css" th:href="@{css/desktop.css}" rel="stylesheet"></link>
+        <link href="../static/css/responsive.css" th:href="@{css/responsive.css}" rel="stylesheet"></link>
+        <link rel="stylesheet" type="text/css" href="../static/css/font-awesome.min.css" th:href="@{css/font-awesome.min.css}"></link>
+        <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+              th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+              rel="stylesheet" media="screen" ></link>
+        <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+        th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+        <!-- Bootstrap.js -->
+        <script src="../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}" ></script>
+           <link rel="icon" href="../static/images/favicon.ico" type="image/ico" > </link>
+
+
+        <!-- Bootstrap.js -->
+        <link rel="stylesheet" type="text/css" href="../static/css/dataTables.bootstrap.min.css" th:href="@{css/dataTables.bootstrap.min.css}"> </link>
+        <script type="text/javascript"  src="../static/js/jquery.dataTables.min.js" th:src="@{js/jquery.dataTables.min.js}"></script>
+        <script type="text/javascript"  src="../static/js/dataTables.bootstrap.min.js" th:src="@{js/dataTables.bootstrap.min.js}"></script>
+
+        <link rel="stylesheet" href="../static/css/kendo.common.min.css" th:href="@{css/kendo.common.min.css}"></link>
+        <link rel="stylesheet" href="../static/css/kendo.default.min.css" th:href="@{css/kendo.default.min.css}"></link>
+        <!-- <link rel="stylesheet" href="../static/css/kendo.default.mobile.min.css" th:href="@{css/kendo.default.mobile.min.css}"></link> -->
+        <script src="../static/js/kendo.all.min.js" th:src="@{js/kendo.all.min.js}"></script>
+        
+        <link type="text/css" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/smoothness/jquery-ui.min.css" media="screen"
+        									th:href="@{http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/smoothness/jquery-ui.min.css}"></link>
+        
+       <link rel="stylesheet" href="../static/css/jquery.ui.plupload.css" th:href="@{css/jquery.ui.plupload.css}"></link>
+       
+       <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js" th:src="@{http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js}"></script>
+       <script type="text/javascript"  src="../static/js/plupload.full.min.js" th:src="@{js/plupload.full.min.js}"></script>
+       <script type="text/javascript"  src="../static/js/jquery.ui.plupload.min.js" th:src="@{js/jquery.ui.plupload.min.js}"></script>
+      
+    </head>
+    <body>
+        <!-- Page Container -->
+        <div id="page-container">
+            <div th:replace="fragments/header :: header">
+                <header class="navbar navbar-inverse">
+                    <!-- Mobile Navigation, Shows up  on smaller screens -->
+                    <ul class="navbar-nav-custom pull-right hidden-md hidden-lg">
+                        <li class="divider-vertical"></li>
+                        <li>
+                            <!-- It is set to open and close the main navigation on smaller screens. The class .navbar-main-collapse was added to aside#page-sidebar -->
+                            <a href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-main-collapse">
+                                <i class="fa fa-bars"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- END Mobile Navigation -->
+
+                    <!-- Logo -->
+                    <a href="index.html" class="navbar-brand header-logo-img"><img src="../static/images/logo.png" th:src="@{images/logo.png}" alt="logo" class="img-responsive"></img></a>
+                    <!-- Header Widgets -->
+                    <!-- You can create the widgets you want by replicating the following. Each one exists in a <li> element -->
+                    <ul id="widgets" class="navbar-nav-custom pull-right">
+                        <!-- Just a divider -->
+                        <li class="divider-vertical"></li>
+                        <!-- User Menu -->
+                        <li class="dropdown pull-right dropdown-user">
+                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user fa-2x"></i> <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <!-- Just a button demostrating how loading of widgets could happen, check main.js- - uiDemo() -->
+                                <li>
+                                    <a href="javascript:void(0)" class="loading-on"><i class="fa fa-refresh"></i> Refresh</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <!-- Modal div is at the bottom of the page before including javascript code #modal-user-settings -->
+                                    <a href="" role="button" data-toggle="modal"><i class="fa fa-user"></i> User Profile</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><i class="fa fa-wrench"></i> App Settings</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="logout"><i class="fa fa-lock"></i> Log out</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- END User Menu -->
+                    </ul>
+                    <!-- END Header Widgets -->
+                </header>            
+                <!-- END Header -->
+                <!-- Inner Container -->
+                <div class="sub_header clearfix">
+                    <div class="col-md-12">
+                        <nav class=" navbar-default menu-default">
+                            <div class="container-fluid menu-container">
+                                <!-- Brand and toggle get grouped for better mobile display -->
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                </div>
+                                <!-- Collect the nav links, forms, and other content for toggling -->
+                                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                    <ul class="nav navbar-nav">
+                                        <li class="">
+                                            <a title="Home" href="home.html">Home</a>
+                                        </li>
+                                        <li class="">
+                                            <a title="Database" href="database">Database</a>
+                                        </li>
+                                        <li class="">
+                                            <a title="Project" href="project.html">Project</a>
+                                        </li>                                          
+                                        <li class="">
+                                            <a title="Edit Profile" href="editprofile.html">Edit Profile</a>
+                                        </li>                                            
+                                    </ul>
+                                </div><!-- /.navbar-collapse -->
+                            </div><!-- /.container-fluid -->
+                        </nav>
+                    </div>
+                </div>
+
+            </div>
+            <!-- main header html contecnt end -->
+            <!-- Inner Container -->
+            <div id="inner-container">
+                <!-- Page Content -->
+                <div id="page-content">
+                    <!-- Navigation info -->
+
+                    <!-- END Navigation info -->
+                    <!-- Datatables -->
+                    <div class="row">
+                        <div class="col-xs-7 col-sm-7 col-md-7">
+						        
+						<form namespace="/" id="addExperiment" name="addExperiment" onsubmit="return validateForm_addExperiment();" th:action="@{|/addExperiment?project_id=${project_id}|}" method="post" class="form-horizontal">
+						<input type="hidden" name="experiment_id" id="experiment_id" th:value="${experiment != null} ? ${experiment.experiment_id} : 0"></input>
+						<div class="panel panel-primary">
+						    <div class="panel-heading">
+						        <h5 class="panel-title"><span th:if="${experiment != null}">Edit experiment</span> <span th:if="${experiment == null}">Add new experiment</span></h5>
+						    </div>
+						    <div class="panel-body">
+						        <div class="form-group">
+						            <label class="col-sm-5 text-left text-nowrap control-label">
+						                Sample name
+						            </label>
+						            <div class="col-sm-7">
+						                <input type="text" id="sampleName" name="sampleName" class="form-control" th:value="${experiment != null} ? ${experiment.sampleName} : ''"></input><br></br>
+								(please do not include special characters (e.g., +, %, #, space) in sample name 
+						            </div>
+						        </div>
+						        <div class="form-group">
+						            <label class="col-sm-5 text-left text-nowrap control-label">
+						                Sample description
+						            </label>
+						            <div class="col-sm-7">
+						                <div id="wwgrp_addExperiment_sampleDescription" class="wwgrp">
+						<div id="wwctrl_addExperiment_sampleDescription" class="wwctrl">
+						<textarea name="sampleDescription" cols="50" rows="5" id="addExperiment_sampleDescription" class="form-control"></textarea></div> </div>
+						
+						            </div>
+						        </div>
+						        <div class="form-group">
+						            <label class="col-sm-5 text-left text-nowrap control-label">
+						                Instrument
+						            </label>
+						            <div class="col-sm-7">
+						                <div class="col-xs-7" style="padding-left:0px">
+						                    <select name="instrument" id="instrument" class="form-control">
+                                                          <option th:each="instrument : ${instrumentList}" 
+													        th:value="${instrument.id}" 
+													        th:text="${instrument.instrumentName}">	</option>
+
+
+                                            </select>
+						                </div>
+						                <div class="col-xs-5">
+						                
+						                <a href="/viewAddNewInstrument">Add new instrument</a>
+						                </div>
+						            </div>
+						        </div>
+						        <div class="form-group">
+						            <label class="col-sm-5 text-left text-nowrap control-label">
+						                Experiment date
+						            </label>
+						            <div class="col-sm-7">
+						                <div class="col-xs-5" style="padding-left:0px">
+						                    <select dojotype="struts:ComboBox" id="addExperiment_month" class="form-control" name="month" keyname="monthKey" initialvalue="0">
+											    <option value="1">January</option>
+											    <option value="2">February</option>
+											    <option value="3">March</option>
+											    <option value="4">April</option>
+											    <option value="5">May</option>
+											    <option value="6">June</option>
+											    <option value="7">July</option>
+											    <option value="8">August</option>
+											    <option value="9">September</option>
+											    <option value="10">October</option>
+											    <option value="11">November</option>
+											    <option value="12">December</option>
+											</select>
+						                </div>
+						                <div class="col-xs-3" style="padding-left:0px">
+						                    <select dojotype="struts:ComboBox" id="addExperiment_date" class="form-control" name="date" keyname="dateKey">
+											    <option value="01">01</option>
+											    <option value="02">02</option>
+											    <option value="03">03</option>
+											    <option value="04">04</option>
+											    <option value="05">05</option>
+											    <option value="06">06</option>
+											    <option value="07">07</option>
+											    <option value="08">08</option>
+											    <option value="09">09</option>
+											    <option value="10">10</option>
+											    <option value="11">11</option>
+											    <option value="12">12</option>
+											    <option value="13">13</option>
+											    <option value="14">14</option>
+											    <option value="15">15</option>
+											    <option value="16">16</option>
+											    <option value="17">17</option>
+											    <option value="18">18</option>
+											    <option value="19">19</option>
+											    <option value="20">20</option>
+											    <option value="21">21</option>
+											    <option value="22">22</option>
+											    <option value="23">23</option>
+											    <option value="24">24</option>
+											    <option value="25">25</option>
+											    <option value="26">26</option>
+											    <option value="27">27</option>
+											    <option value="28">28</option>
+											    <option value="29">29</option>
+											    <option value="30">30</option>
+											    <option value="31">31</option>
+											</select>
+						                </div>
+						                <div class="col-xs-4" style="padding-left:0px">
+						                    <select dojotype="struts:ComboBox" id="addExperiment_year" class="form-control" name="year" keyname="yearKey" initialvalue="0">
+											    <option value="2016">2016</option>
+											    <option value="2015">2015</option>
+											    <option value="2014">2014</option>
+											    <option value="2013">2013</option>
+											    <option value="2012">2012</option>
+											    <option value="2011">2011</option>
+											    <option value="2010">2010</option>
+											    <option value="2009">2009</option>
+											    <option value="2008">2008</option>
+											    <option value="2007">2007</option>
+											    <option value="2006">2006</option>
+											    <option value="2005">2005</option>
+											    <option value="2004">2004</option>
+											    <option value="2003">2003</option>
+											    <option value="2002">2002</option>
+											    <option value="2001">2001</option>
+											    <option value="2000">2000</option>
+											    <option value="1999">1999</option>
+											    <option value="1998">1998</option>
+											    <option value="1997">1997</option>
+											</select>
+						                </div>
+						            </div>
+						        </div>
+						        <div class="form-group">
+						            <label class="col-sm-5 text-left text-nowrap control-label">
+						                Experiment description
+						            </label>
+						            <div class="col-sm-7">
+						                <div id="wwgrp_addExperiment_description" class="wwgrp">
+						<div id="wwctrl_addExperiment_description" class="wwctrl">
+						<textarea name="description" cols="50" rows="5" id="addExperiment_description" class="form-control"></textarea></div> </div>
+						
+						            </div>
+						        </div>
+						    </div>
+						</div>
+						        <div class="form-group">
+						            &nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="&nbsp;&nbsp;Submit" class="btn btn-primary"></input>
+						            &nbsp;<input type="button" value="Cancel" onclick="history.back()" class="btn btn-default"></input>
+						        </div>
+						
+						</form>
+						
+						
+						
+						<script type="text/javascript">
+						    function validateForm_addExperiment() {
+						        form = document.getElementById("addExperiment");
+						        clearErrorMessages(form);
+						        clearErrorLabels(form);
+						
+						        var errors = false;
+						
+						        return !errors;
+						    }
+						</script>
+						
+						</div>
+                    </div>
+                    <!-- END Datatables in the grid -->
+                </div>
+                <!-- END Page Content -->
+                <!-- Footer -->
+                <div class="container-fluid" id="footer"  th:replace="fragments/footer :: footer">
+                   <span class="col-sm-6 text-left">
+                        Version: 4.0
+
+                        | Logged in as: Proteome Cloud
+
+                    </span>
+                    <span class="col-sm-6 text-right">
+                        <span style="color: #fff">4.0.0</span>
+                        &copy; 2016 Proteome Cloud
+                    </span>
+                </div>            
+                <!-- END Footer -->
+            </div>
+            <!-- END Inner Container -->
+        </div>
+        <!-- END Page Container -->
+        <!-- Javascript code only for this page -->
+
+        <script>
+        	
+        </script>
+    </body>
+</html>

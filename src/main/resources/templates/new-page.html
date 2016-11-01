@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head xmlns:th="http://www.thymeleaf.org">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"></meta>
+        <title>Welcome to Proteome Cloud</title>
+        <link href="../static/css/desktop.css" th:href="@{css/desktop.css}" rel="stylesheet"></link>
+        <link href="../static/css/responsive.css" th:href="@{css/responsive.css}" rel="stylesheet"></link>
+        <link rel="stylesheet" type="text/css" href="../static/css/font-awesome.min.css" th:href="@{css/font-awesome.min.css}"></link>
+        <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+              th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+              rel="stylesheet" media="screen" ></link>
+        <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+        th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+        <!-- Bootstrap.js -->
+        <script src="../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}" ></script>
+
+
+        <!-- Bootstrap.js -->
+        <link rel="stylesheet" type="text/css" href="../static/css/dataTables.bootstrap.min.css" th:src="@{css/dataTables.bootstrap.min.css}"> </link>
+        <script type="text/javascript"  src="../static/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript"  src="../static/js/dataTables.bootstrap.min.js"></script>
+
+    </head>
+    <body>
+        <!-- Page Container -->
+        <div id="page-container">
+
+            <div th:replace="fragments/header :: header">
+
+                <header class="navbar navbar-inverse">
+                    <!-- Mobile Navigation, Shows up  on smaller screens -->
+                    <ul class="navbar-nav-custom pull-right hidden-md hidden-lg">
+                        <li class="divider-vertical"></li>
+                        <li>
+                            <!-- It is set to open and close the main navigation on smaller screens. The class .navbar-main-collapse was added to aside#page-sidebar -->
+                            <a href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-main-collapse">
+                                <i class="fa fa-bars"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- END Mobile Navigation -->
+
+                    <!-- Logo -->
+                    <a href="index.html" class="navbar-brand header-logo-img"><img src="../static/images/logo.png" th:src="@{images/logo.png}" alt="logo" class="img-responsive"></img></a>
+                    <!-- Header Widgets -->
+                    <!-- You can create the widgets you want by replicating the following. Each one exists in a <li> element -->
+                    <ul id="widgets" class="navbar-nav-custom pull-right">
+                        <!-- Just a divider -->
+                        <li class="divider-vertical"></li>
+                        <!-- User Menu -->
+                        <li class="dropdown pull-right dropdown-user">
+                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user fa-2x"></i> <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <!-- Just a button demostrating how loading of widgets could happen, check main.js- - uiDemo() -->
+                                <li>
+                                    <a href="javascript:void(0)" class="loading-on"><i class="fa fa-refresh"></i> Refresh</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <!-- Modal div is at the bottom of the page before including javascript code #modal-user-settings -->
+                                    <a href="" role="button" data-toggle="modal"><i class="fa fa-user"></i> User Profile</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)"><i class="fa fa-wrench"></i> App Settings</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="logout"><i class="fa fa-lock"></i> Log out</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- END User Menu -->
+                    </ul>
+                    <!-- END Header Widgets -->
+                </header>            
+                <!-- END Header -->
+                <!-- Inner Container -->
+                <div class="sub_header clearfix">
+                    <div class="col-md-12">
+                        <nav class=" navbar-default menu-default">
+                            <div class="container-fluid menu-container">
+                                <!-- Brand and toggle get grouped for better mobile display -->
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                </div>
+                                <!-- Collect the nav links, forms, and other content for toggling -->
+                                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                    <ul class="nav navbar-nav">
+                                        <li class="">
+                                            <a title="Home" href="home.html">Home</a>
+                                        </li>
+                                        <li class="">
+                                            <a title="Database" href="database">Database</a>
+                                        </li>
+                                        <li class="">
+                                            <a title="Project" href="project.html">Project</a>
+                                        </li>                                          
+                                        <li class="">
+                                            <a title="Edit Profile" href="editprofile.html">Edit Profile</a>
+                                        </li>                                            
+                                    </ul>
+                                </div><!-- /.navbar-collapse -->
+                            </div><!-- /.container-fluid -->
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <!-- main header html contecnt end -->
+
+            <div id="inner-container">
+                <!-- Page Content -->
+                <div id="page-content">
+                    <!-- Navigation info -->
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <ol class="breadcrumb">
+                                <li class="active">Home</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <!-- END Navigation info -->
+                    <!-- Datatables -->
+                    <div class="row">
+                        <div class="col-md-12 push">
+                            <div id="main">
+                                <!-- breadcrumbs -->
+                            
+                                <div class="addnewdb">
+                                    <form class="form-horizontal">
+                                        <div class="panel panel-primary">
+                                            <div class="panel-heading" style="background-color: #76b3ef;">
+                                                <h5 class="panel-title">New Layout</h5>
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="form-group">
+                                                    <label  class="col-sm-2 ">LABEL</label>
+                                                    <div class="col-sm-10">
+                                                        <select  class="form-control">
+                                                            <option>1</option>
+                                                            <option>2</option>
+                                                            <option>3</option>
+                                                            <option>4</option>
+                                                            <option>5</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label  class="col-sm-2 ">lABEL</label>
+                                                    <div class="col-sm-10">
+                                                        <select  class="form-control">
+                                                            <option>1</option>
+                                                            <option>2</option>
+                                                            <option>3</option>
+                                                            <option>4</option>
+                                                            <option>5</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label  class="col-sm-2 ">LABEL</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="email" class="form-control" />
+                                                    </div>
+                                                </div>
+                                               
+                                                <div class="form-group">
+                                                &nbsp;&nbsp;&nbsp;&nbsp;<input value="Submit" class="btn btn-primary" style="background-color: #76b3ef;" type="submit">
+                                                &nbsp;<input value="Cancel" class="btn btn-default" type="button">
+                                            </div>
+                                            </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                            <!-- END Datatables in the grid -->
+                        </div>
+                        <!-- END Page Content -->
+                        <!-- Footer -->
+                        <div class="container-fluid" id="footer" th:replace="fragments/footer :: footer">
+                            <span class="col-sm-6 text-left">
+                                Version: 4.0
+
+                                | Logged in as: Proteome Cloud
+
+                            </span>
+                            <span class="col-sm-6 text-right">
+                                <span style="color: #fff">4.0.0</span>
+                                &copy; 2016 Proteome Cloud
+                            </span>
+                        </div>            
+                        <!-- END Footer -->
+                    </div>
+                    <!-- END Inner Container -->
+                </div>
+                <!-- END Page Container -->
+                <!-- Javascript code only for this page -->
+
+                <script>
+                    $(function () {
+                        /* Initialize Datatables */
+                        $('#example-datatables').dataTable({columnDefs: [{orderable: false, targets: [0]}]});
+                        $('#example-datatables2').dataTable();
+                        $('#example-datatables3').dataTable();
+                        $('.dataTables_filter input').attr('placeholder', 'Search');
+                    });
+                </script>
+                </body>
+                </html>

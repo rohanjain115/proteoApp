@@ -1,0 +1,135 @@
+<html xmlns:th="http://www.thymeleaf.org">
+  <head xmlns:th="http://www.thymeleaf.org">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"></meta>
+        <title>Admin Message | Proteome Cloud</title>
+        <link href="../static/css/responsive.css" th:href="@{css/responsive.css}" rel="stylesheet"></link>
+        <link rel="stylesheet" type="text/css" href="../static/css/font-awesome.min.css" th:href="@{css/font-awesome.min.css}"></link>
+        <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen" ></link>
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+        <!-- Bootstrap.js -->
+        <script src="../static/js/bootstrap.min.js" th:src="@{js/bootstrap.min.js}" > </script>
+           <link rel="icon" href="../static/images/favicon.ico" type="image/ico" > </link>
+
+
+        <!-- Bootstrap.js -->
+        <link rel="stylesheet" type="text/css" href="../static/css/dataTables.bootstrap.min.css" th:src="@{css/dataTables.bootstrap.min.css}"> </link>
+        <script type="text/javascript"  src="../static/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript"  src="../static/js/dataTables.bootstrap.min.js"></script>
+
+
+	<link rel="stylesheet" href="css/kendo.common.min.css" />
+    <link rel="stylesheet" href="css/kendo.default.min.css"/>
+    <link rel="stylesheet" href="css/kendo.default.mobile.min.css" />
+    <script src="js/kendo.all.min.js" ></script>
+    <link href="../static/css/desktop.css" th:href="@{css/desktop.css}" rel="stylesheet"></link>
+    
+    </head>
+<body>
+	<div th:replace="fragments/header :: header">
+	</div>
+	
+	
+	
+	<div id="inner-container">
+                <!-- Page Content -->
+                <div id="page-content">
+                    <!-- Navigation info -->
+               
+                    <!-- END Navigation info -->
+                    <!-- Datatables -->
+                    <div class="row">
+                        <div class="col-md-12 push">
+                              <div id="grid"> </div>
+                        </div>
+                    </div>
+                    <!-- END Datatables in the grid -->
+                </div>
+                <!-- END Page Content -->
+                <!-- Footer -->
+                <div class="container-fluid" id="footer" th:replace="fragments/footer :: footer">
+                    
+                </div>            
+                <!-- END Footer -->
+            </div>
+            <!-- END Inner Container -->
+            
+            <script  th:inline="javascript">
+            /*<![CDATA[*/
+                       
+                $(document).ready(function () {
+                    var crudServiceBaseUrl = "message",
+                        dataSource = new kendo.data.DataSource({
+                            transport: {
+                                read:  {
+                                    url: crudServiceBaseUrl + "/read",
+                                    dataType: "json",
+                                    type: "post"
+                                },
+                                update: {
+                                    url: crudServiceBaseUrl + "/update",
+                                    dataType: "json",
+                                    type: "post"
+                                },
+                                destroy: {
+                                    url: crudServiceBaseUrl + "/delete",
+                                    dataType: "json",
+                                    type: "post"
+                                },
+                                create: {
+                                    url: crudServiceBaseUrl + "/update",
+                                    dataType: "json",
+                                    type: "post"
+                                },
+                                /* parameterMap: function(options, operation) {
+                                    if (operation !== "read" && options.models) {
+                                        return kendo.stringify(options.models);
+                                    }
+                                } */
+                            },
+                           /*  schema: {
+                            	data: "_embedded.siteUpdateMessages",
+                                total: "page.totalElements"
+                              }, */
+                            batch: false,
+                            pageSize:50,
+                            serverPaging: false,
+                            schema: {
+                                model: {
+                                    id: "updateId",
+                                    fields: {
+                                    	updateId: {editable:false},
+                                    	updateText: { type :"text",editable:true },
+                                    	updateDate : {editable:false}
+                                    }
+                                }
+                            }
+                        });
+
+                    $("#grid").kendoGrid({
+                        dataSource: dataSource,
+                        sortable: true,
+                        navigatable: true,
+                        pageable: true,
+                        height: 550,
+                        toolbar: ["create", "save", "cancel"],
+                        columns: [
+                            { field: "updateId", title: "updateId", headerAttributes : {"class" : "db-custom-table-header"}},
+                            { field: "updateText", title: "updateText", headerAttributes : {"class" : "db-custom-table-header"}},
+                            { field: 'updateDate',
+                                title: 'Date', headerAttributes : {"class" : "db-custom-table-header"}
+                              },
+                            { command: "destroy", title: "&nbsp;", width: 150, headerAttributes : {"class" : "db-custom-table-header"} }],
+                        editable: true
+                    });
+                });
+            
+                /*]]>*/
+            </script>
+       
+
+
+</body>
+</html>
